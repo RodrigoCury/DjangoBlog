@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User  # Link an User to a BlogPost
 
 # Create your models here.
 
@@ -9,7 +9,7 @@ class BlogPost(models.Model):
     STATUS = (
         ('rascunho', "Rascunho"),
         ('publicado', "Publicado")
-    )
+    )  # tuple of dual tuples
     title = models.CharField(blank=False, max_length=50)
     slug = models.SlugField(max_length=250)
     author = models.ForeignKey(User,
@@ -27,4 +27,4 @@ class BlogPost(models.Model):
         ordering = ("-published",)
 
     def __str__(self):
-        return f"{self.title} - {self.status}"
+        return f"{self.title}"
