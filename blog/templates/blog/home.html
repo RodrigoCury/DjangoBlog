@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+{% for post in object_list %}
+{% if post.status == "publicado"%}
+<div class="post-entry">
+    <h2><a href="{{post.get_absolute_url}}">{{post.title}}</a></h2>
+    <p>{{post.content}}</p>
+</div>
+{% endif %}
+{% endfor %}
+
+{% endblock content %}
