@@ -7,9 +7,10 @@ Blog - Detail
 {% block content %}
 
 <div class="post-entry">
-    <h2>{{blogpost.title}}</h2>
+    <h2>{{object.title}}</h2>
 
-    <p>{{blogpost.content}}</p>
+    <p>{{object.content}}</p>
 </div>
-
+<a href="{{ object.get_absolute_url_update }}">Editar</a>
+<a href="{{ object.get_absolute_url_delete }}">Delete</a>
 {% endblock content %}

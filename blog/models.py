@@ -33,6 +33,12 @@ class BlogPost(models.Model):
     def get_absolute_url(self):
         return reverse('post_detail', args=[self.slug])
 
+    def get_absolute_url_update(self):
+        return reverse('post_edit', args=[self.slug])
+
+    def get_absolute_url_delete(self):
+        return reverse("post_delete", args=[self.slug])
+
     class Meta:
         # "-MODEL_COLUMN" => ordem decrescente/ "MODEL_COLUMN" => ordem crescente
         ordering = ("-published",)

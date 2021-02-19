@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Blog - Delete
+{% endblock %}
+
+{% block content %}
+<h1>Deletar postagem</h1>
+<form action="#" method="post">
+    {% csrf_token %}
+    <p>Você tem certeza que quer excluir <i>{{object.title}}</i> ?</p>
+    <input type="submit" value="Confirmar">
+</form>
+{% endblock content %}
