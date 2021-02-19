@@ -2,6 +2,9 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User  # Link an User to a BlogPost
 from django.urls import reverse
+from django.db.models.signals import pre_save
+from django.utils.text import slugify
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -18,7 +21,7 @@ class BlogPost(models.Model):
         ('publicado', "Publicado")
     )  # tuple of dual tuples
     title = models.CharField(blank=False, max_length=50)
-    slug = models.SlugField(max_length=250)
+    slug = models.SlugField(max_length=250, unique=True)
     author = models.ForeignKey(User,
                                on_delete=models.CASCADE)  # Obrigatório
     content = models.TextField()
@@ -45,3 +48,8 @@ class BlogPost(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+
+@receiver(pre_save, sender=BlogPost)
+def insert_slug(sender, instance, **kwargs):
+    instance.slug = slugify(instance.title)
