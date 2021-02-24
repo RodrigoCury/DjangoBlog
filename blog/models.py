@@ -49,7 +49,8 @@ class BlogPost(models.Model):
                               upload_to='blog',
                               blank=True,
                               null=True)
-    content = RichTextField(verbose_name='Conteúdo',)
+    content = RichTextField(verbose_name='Conteúdo',
+                            config_name='content_editor')
     published = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)

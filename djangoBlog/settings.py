@@ -48,6 +48,15 @@ INSTALLED_APPS = [
     'accounts',
 ]
 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+    },
+    'content_editor': {
+        'toolbar': 'Basic',
+    },
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
