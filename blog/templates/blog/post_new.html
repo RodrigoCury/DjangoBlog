@@ -1,15 +1,32 @@
 {% extends 'base.html' %}
-
+{% load bootstrap %}
 {% block title %}
-Blog - New Post
+Blog - Nova Postagem
 {% endblock %}
 
 {% block content %}
-
-<h1>Nova Postagem</h1>
-<form action="" method="post">{% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Salvar">
-</form>
-
+{% if user.is_superuser %}
+<div class='container'>
+    <div class='card'>
+        <div class='card-header d-flex justify-content-center'>
+            <h2>Nova Postagem</h2>
+        </div>
+        <div class='card-body'>
+            <form method="post">
+                {% csrf_token %}
+                {{ form|bootstrap }}
+                <button class='btn btn-primary' type="submit">Salvar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% elif user.is_authenticated %}
+<div class="alert alert-warning" role="alert">
+    Olá {{user.first_name}}, você não tem autorização para postar um artigo!!
+</div>
+{% else %}
+<div class="alert alert-info" role="alert">
+    Você precisa estar logado e fazer parte da equipe para postar um artigo!!
+</div>
+{% endif %}
 {% endblock content %}

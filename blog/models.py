@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User  # Link an User to a BlogPost
+from ckeditor.fields import RichTextField
 from django.urls import reverse
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
@@ -15,16 +16,40 @@ class PublishedManager(models.Manager):
 
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=100,
+                            verbose_name='Nome')
+    published = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Categoria"
+        verbose_name_plural = "Categorias"
+        ordering = ('created_at',)
+
+    def __str__(self):
+        return self.name
+
+
 class BlogPost(models.Model):
     STATUS = (
         ('rascunho', "Rascunho"),
         ('publicado', "Publicado")
     )  # tuple of dual tuples
-    title = models.CharField(blank=False, max_length=50)
-    slug = models.SlugField(max_length=250, unique=True)
+    title = models.CharField(verbose_name='Título',
+                             blank=False,
+                             max_length=50)
+    slug = models.SlugField(max_length=250,
+                            unique=True)
     author = models.ForeignKey(User,
                                on_delete=models.CASCADE)  # Obrigatório
-    content = models.TextField()
+    category = models.ManyToManyField(Category,
+                                      related_name='get_posts',)
+    image = models.ImageField(verbose_name="Imagem",
+                              upload_to='blog',
+                              blank=True,
+                              null=True)
+    content = RichTextField(verbose_name='Conteúdo',)
     published = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -45,6 +70,8 @@ class BlogPost(models.Model):
     class Meta:
         # "-MODEL_COLUMN" => ordem decrescente/ "MODEL_COLUMN" => ordem crescente
         ordering = ("-published",)
+        verbose_name = "Post"
+        verbose_name_plural = "Posts"
 
     def __str__(self):
         return f"{self.title}"

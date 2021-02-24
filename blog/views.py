@@ -5,6 +5,7 @@ from django.views.generic.edit import CreateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from .models import BlogPost
+from .forms import BlogPostForm
 
 # Create your views here.
 
@@ -20,18 +21,20 @@ class BlogDetailView(DetailView):
 
 
 class BlogCreateView(CreateView):
+    form_class = BlogPostForm
     model = BlogPost
     template_name = "blog/post_new.html"
-    fields = ['title', 'content', 'author', 'status']
 
     def success_message(title):
         return f"{title} foi criado com sucesso"
 
 
 class BlogUpdateView(SuccessMessageMixin, UpdateView):
+    form_fields_change = BlogPostForm
+    form_fields_change.Meta.fields = ('title', 'content', 'category', 'status')
+    form_class = form_fields_change
     model = BlogPost
     template_name = 'blog/post_edit.html'
-    fields = ['title', 'content']
     success_message = "%(calculated_field)s alterado com sucesso"
 
     def get_success_message(self, cleaned_data):

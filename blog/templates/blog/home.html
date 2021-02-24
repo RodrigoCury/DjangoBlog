@@ -1,26 +1,29 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Home
+Bioinformatizado
 {% endblock %}
 
 {% block content %}
 
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
-</ul>
-{% endif %}
+<div class="col-lg-8 col-md-10 mx-auto"></div>
 
-{% for post in object_list %}
-{% if post.status == "publicado"%}
-<div class="post-entry">
-    <h2><a href="{{post.get_absolute_url}}">{{post.title}}</a></h2>
-    <p>{{post.content}}</p>
+    {% for post in object_list %}
+        {% if post.status == "publicado"%}
+
+            <div class="post-preview">
+                <a href='{{post.get_absolute_url}}'>
+                   <h2 class="post-title">{{post.title}}</h2>
+                    <h3 class="post-subtitle">{{post.content|striptags|safe}}</h3>
+                </a>
+                <p class="post-meta">Postado por <a href="#">{{post.author.first_name}}</a> em {{post.published}}</p>
+            </div>
+            <hr>
+
+        {% endif %}
+    {% endfor %}
 </div>
-{% endif %}
-{% endfor %}
-
+<div class="clearfix">
+    <a class="btn btn-primary float-right" href="#">Postagens mais antigas &rarr;</a>
+</div>
 {% endblock content %}

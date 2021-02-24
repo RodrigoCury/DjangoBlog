@@ -1,14 +1,32 @@
 {% extends 'base.html' %}
-
+{% load bootstrap %}
 {% block title %}
-Blog - Delete
+Blog - Delete {{object.title}}
 {% endblock %}
 
 {% block content %}
-<h1>Deletar postagem</h1>
-<form action="#" method="post">
-    {% csrf_token %}
-    <p>Você tem certeza que quer excluir <i>{{object.title}}</i> ?</p>
-    <input type="submit" value="Confirmar">
-</form>
+{% if user.is_superuser %}
+    <div class='container'>
+        <div class='card'>
+            <div class='card-header d-flex'>
+                <h1>Deletar postagem?</h1>
+            </div>
+            <div class='card-body'>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <h3>Você tem certeza que quer excluir <i>{{object.title}}</i> ?</h3>
+                    <button class='btn btn-primary position-relative' type="submit">Confirmar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% elif user.is_authenticated %}
+    <div class="alert alert-warning" role="alert">
+        Olá {{user.first_name}}, você não tem autorização para deletar um artigo!!
+    </div>
+{% else %}
+    <div class="alert alert-info" role="alert">
+        Você precisa estar logado para deletar um artigo!!
+    </div>
+{% endif %}
 {% endblock content %}

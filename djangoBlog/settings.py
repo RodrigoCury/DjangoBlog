@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrapform',
+    'ckeditor',
     'blog',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -134,3 +137,7 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+LOGIN_REDIRECT_URL = 'home'
+
+LOGOUT_REDIRECT_URL = 'home'
