@@ -1,9 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
 Bioinformatizado
-{% endblock %}
+{% endblock title %}
 
+{% block imgurl %} 
+style="background-image: url({% static 'img/home-gb.jpg' %})"
+{% endblock imgurl %}
+
+{% block pagetitle %} 
+<h1>Aprendendo Bioinformática</h1>
+<span class="subheading">Aprendizado vem aos poucos</span>
+{% endblock pagetitle %}
 {% block content %}
 
 <div class="d-flex flex-column col-lg-8 col-md-10 mx-auto"></div>
@@ -11,26 +20,54 @@ Bioinformatizado
     {% include 'messages.html'%}
 
     {% for post in object_list %}
-        {% if post.status == "publicado"%}
+        {% if post.status == 'publicado' %}
 
             <div class="post-preview">
                 <a href='{{post.get_absolute_url}}'>
                     <h2 class="post-title">{{post.title}}</h2>
                     <h3 class="post-subtitle">{{post.content|striptags|safe|truncatechars:"200"}}</h3>
                 </a>
-                <a href='#' class='font-weight-bold'>
                         {% for category in post.category.all %}
+                        <a href='{{ category.get_absolute_url }}' class='btn font-weight-bold' style='padding:0;'>
                             {{category.name}}
+                        </a>    
                         {% endfor %}
-                    </a>
                 <p class="post-meta">Postado por <a href="#">{{post.author.first_name}}</a> em {{post.published}}</p>
             </div>
             <hr>
 
         {% endif %}
     {% endfor %}
+
+<div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-group mr-2" role="group" aria-label="First group">
+    {% if page_obj.has_previous %}
+    <a href="?page=1"><button type="button" class="btn btn-primary">&laquo; Primeiro</button></a>
+    <a href="?page={{ page_obj.previous_page_number }}"><button type="button" class="btn btn-primary">&#8636;</button></a>
+    {% else %}
+    <a class="disabled"><button type="button" class="btn btn-primary">&laquo; Primeiro</button></a>
+    <a class="disabled"><button type="button" class="btn btn-primary">&#8636;</button></a>
+    {% endif %}
+  </div>
+
+  <div class="btn-group mr-2" role="group" aria-label="Second group">
+    <a class="disabled" href="?page={{ page_obj.number }}">
+    <button type="button" class="btn btn-primary disabled">
+    Página {{ page_obj.number }}
+    </button>
+    </a>
+  </div>
+
+  <div class="btn-group" role="group" aria-label="Third group">
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}"><button type="button" class="btn btn-primary">&#8640;</button></a>
+    <a href="?page={{ page_obj.paginator.num_pages }}"><button type="button" class="btn btn-primary">Último &raquo;</button></a>
+    {% else %}
+    <a class="disabled"><button type="button" class="btn btn-primary">&#8640;</button></a>
+    <a class="disabled"><button type="button" class="btn btn-primary">Último &raquo;</button></a>
+    {% endif %}
+  </div>
 </div>
-<div class="clearfix">
-    <a class="btn btn-primary float-right" href="#">Postagens mais antigas &rarr;</a>
+
 </div>
 {% endblock content %}

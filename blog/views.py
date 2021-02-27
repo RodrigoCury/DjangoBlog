@@ -1,14 +1,14 @@
-from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.views.generic.edit import CreateView
-from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib import messages
-from .models import BlogPost, Category
 from .forms import BlogPostForm
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from .models import BlogPost, Category
 # Create your views here.
 
 
@@ -19,16 +19,43 @@ def hello(request):
 
 class CategoryListView(ListView):
     model = Category
+    paginate_by = 2
     template_name = 'blog/categories_list.html'
+
+# {'paginator': < django.core.paginator.Paginator object at 0x7ff7f003a1f0 > ,
+#  'page_obj': < Page 1 of 2 >,
+#  'is_paginated': True,
+#  'object_list': < QuerySet [ < Category: Machine Learning > , < Category: Pessoal > ] > ,
+#  'category_list': < QuerySet [ < Category: Machine Learning > , < Category: Pessoal > ] > ,
+#  'view': < blog.views.CategoryListView object at 0x7ff7f0017670 >}
 
 
 class CategoryDetailView(DetailView):
     model = Category
     template_name = 'blog/categories.html'
 
+    def get_context_data(self, **kwargs):
+        paginate_by = 3
+        context = super().get_context_data()
+        posts_list = self.object.get_posts.all()
+        paginator = Paginator(posts_list, paginate_by)
+        page = self.request.GET.get('page')
+
+        try:
+            posts = paginator.page(page)
+        except PageNotAnInteger:
+            posts = paginator.page(1)
+        except EmptyPage:
+            posts = paginator.page(paginator.num_pages)
+
+        context['posts'] = posts
+        context['page_obj'] = paginator.get_page(page)
+        return context
+
 
 class BlogListView(ListView):
     model = BlogPost
+    paginate_by = 5
     template_name = "blog/home.html"
 
 

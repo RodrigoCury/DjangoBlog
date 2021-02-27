@@ -4,6 +4,21 @@
 {{object.title}}
 {% endblock %}
 
+{% block imgurl %}
+style="background-image: url({% if object.image %}
+                              {{object.image.url}}
+                              {% else %}
+                              {% load static %}
+                              {% static 'img/home-gb.jpg' %}
+                              {% endif %})"
+{% endblock imgurl %}
+
+{% block pagetitle %}
+<h1>{{object.title}}</h1>
+{% endblock %}
+
+
+
 {% block content %}
 <div class='container'>
     {% include 'messages.html'%}
@@ -11,12 +26,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">
-                    <h2 class="text-center">{{object.title}}</h2>
                     <a href='#' class='font-weight-bold'>
-                        <div class="container btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                         {% for category in object.category.all %}
                             <a href='{{ category.get_absolute_url }}'>
-                                <button type="button" class="btn btn-link">{{category.name}}</button>
+                                <button type="button" class="btn btn-primary">{{category.name}}</button>
                             </a>
                         {% endfor %}
                         </div>

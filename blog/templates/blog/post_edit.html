@@ -1,8 +1,23 @@
 {% extends 'base.html' %}
 {% load bootstrap %}
 {% block title %}
-Blog - {{object.title}} Edit
+Editar - {{object.title}}
 {% endblock %}
+
+{% block imgurl %}
+style="background-image: url({% if object.image %}
+                              {{object.image.url}}
+                              {% else %}
+                              {% load static %}
+                              {% static 'img/home-gb.jpg' %}
+                              {% endif %})"
+{% endblock imgurl %}
+
+{% block pagetitle %}
+<h1>Editar {{object.title}}</h1>
+{% endblock %}
+
+
 
 {% block content %}
 

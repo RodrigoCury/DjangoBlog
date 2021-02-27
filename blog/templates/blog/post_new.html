@@ -1,8 +1,19 @@
 {% extends 'base.html' %}
 {% load bootstrap %}
+{% load static %}
 {% block title %}
 Blog - Nova Postagem
 {% endblock %}
+
+{% block imgurl %}
+style="background-image: url({% static 'img/home-gb.jpg' %})"
+{% endblock imgurl %}
+
+{% block pagetitle %}
+<h1>Nova Postagem</h1>
+{% endblock %}
+
+
 
 {% block content %}
 {% if user.is_superuser %}

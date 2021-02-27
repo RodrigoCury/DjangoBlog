@@ -4,6 +4,21 @@
 Blog - Delete {{object.title}}
 {% endblock %}
 
+{% block imgurl %}
+style="background-image: url({% if object.image %}
+                              {{object.image.url}}
+                              {% else %}
+                              {% load static %}
+                              {% static 'img/home-gb.jpg' %}
+                              {% endif %})"
+{% endblock imgurl %}
+
+{% block pagetitle %}
+<h1>Deletar {{object.title}}</h1>
+{% endblock %}
+
+
+
 {% block content %}
     <div class='container'>
         <div class='card'>
