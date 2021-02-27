@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Bioinformatizado
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-column col-lg-8 col-md-10 mx-auto"> </div>
+
+{% include 'messages.html' %}
+
+<div class="post-preview">
+    <h1 class="post-title"> {{object.name}} </h1>
+    {% for post in object.get_posts.all %}
+        {% if post.status == "publicado"%}
+        <div class="post-preview" style='margin-left:20px'>
+            <a href='{{ post.get_absolute_url }}' class='font-weight-bold'>
+                <h3 class="font-weight-normal post-title"> {{post.title}}</h3>
+                <h3 style='margin-left:20px' class="font-weight-normal post-subtitle"> {{post.content|striptags|safe|truncatechars:"200"}}</h3>
+            </a>
+            <p class="post-meta"> Postado por <a href="#">{{post.author.first_name}}</a> em {{post.published}}</p>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+<hr style='color:black'>
+</div>
+<div class="clearfix">
+    <a class="btn btn-primary float-right" href="#">Postagens mais antigas &rarr</a>
+</div>
+{% endblock content %}

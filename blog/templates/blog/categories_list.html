@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Bioinformatizado
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-row flex-wrap justify-content-around col-lg-8 col-md-10 mx-auto">
+    {% for category in object_list|dictsort:"name" %}
+
+    <div class="card text-center" style="width: 18rem; margin: 2rem 0;">
+        <a href={{ category.get_absolute_url }}>
+            <img class="card-img-top" src={% if category.image %}{{category.image.url}}{% endif %}
+                alt={{category.name}}>
+            <div class="card-body">
+                <h5 class="card-title"> {{category.name}} </h5>
+                <p class="card-text"> {{category.description}} </p>
+            </div>
+        </a>
+    </div>
+    <hr>
+    {% endfor %}
+</div>
+{% endblock content %}

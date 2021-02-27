@@ -1,26 +1,29 @@
-from django.db import models
-from django.utils import timezone
-from django.contrib.auth.models import User  # Link an User to a BlogPost
 from ckeditor.fields import RichTextField
-from django.urls import reverse
-from django.db.models.signals import pre_save
-from django.utils.text import slugify
+from django.contrib.auth.models import User  # Link an User to a BlogPost
 from django.dispatch import receiver
+from django.db import models
+from django.db.models.signals import pre_save
+from django.utils import timezone
+from django.utils.html import mark_safe
+from django.utils.text import slugify
+from django.urls import reverse
 
 # Create your models here.
-
-
-class PublishedManager(models.Manager):
-    def get_queryset(self):
-        return super(PublishedManager, self).get_queryset()\
-
 
 
 class Category(models.Model):
     name = models.CharField(max_length=100,
                             verbose_name='Nome')
     published = models.DateTimeField(default=timezone.now)
+    slug = models.SlugField(max_length=100, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(verbose_name="Imagem",
+                              upload_to='blog',
+                              null=True,
+                              blank=True)
+    description = models.TextField(max_length=50,
+                                   blank=False,
+                                   null=False)
 
     class Meta:
         verbose_name = "Categoria"
@@ -29,6 +32,17 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('category_posts', args=[self.slug])
+
+    @property
+    def view_image(self):
+        return mark_safe(f'<img src="{self.image.url}" width="400">')
+
+    @property
+    def sort(self):
+        return Category.objects.all().order_by('name')
 
 
 class BlogPost(models.Model):
@@ -49,7 +63,7 @@ class BlogPost(models.Model):
                               upload_to='blog',
                               blank=True,
                               null=True)
-    content = RichTextField(verbose_name='Conteúdo',
+    content = RichTextField(verbose_name='Conteudo',
                             config_name='content_editor')
     published = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
@@ -57,7 +71,6 @@ class BlogPost(models.Model):
     status = models.CharField(max_length=10,
                               choices=STATUS,
                               default="rascunho")
-    publishedmanager = PublishedManager()
 
     def get_absolute_url(self):
         return reverse('post_detail', args=[self.slug])
@@ -67,6 +80,10 @@ class BlogPost(models.Model):
 
     def get_absolute_url_delete(self):
         return reverse("post_delete", args=[self.slug])
+
+    @property
+    def view_image(self):
+        return mark_safe(f'<img src="{self.image.url}" width="400">')
 
     class Meta:
         # "-MODEL_COLUMN" => ordem decrescente/ "MODEL_COLUMN" => ordem crescente
@@ -81,3 +98,8 @@ class BlogPost(models.Model):
 @receiver(pre_save, sender=BlogPost)
 def insert_slug(sender, instance, **kwargs):
     instance.slug = slugify(instance.title)
+
+
+@receiver(pre_save, sender=Category)
+def insert_slug(sender, instance, **kwargs):
+    instance.slug = slugify(instance.name)
