@@ -12,7 +12,7 @@ Blog - Nova Postagem
             <h2>Nova Postagem</h2>
         </div>
         <div class='card-body'>
-            <form method="post">
+            <form method="post" enctype='multipart/form-data'>
                 {% csrf_token %}
                 {{ form|bootstrap }}
                 <button class='btn btn-primary' type="submit">Salvar</button>

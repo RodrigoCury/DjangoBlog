@@ -5,14 +5,14 @@ Blog - {{object.title}} Edit
 {% endblock %}
 
 {% block content %}
-{% if user.is_superuser %}
+
     <div class='container'> 
         <div class='card'>
             <div class='card-header d-flex justify-content-center'>
                 <h2>Editar - {{object.title}}</h2>
             </div>
             <div class='card-body'>
-                <form action="" method="post">
+                <form action="" method="post" enctype='multipart/form-data'>
                     {% csrf_token %}
                     {{form|bootstrap}}
                     <button class='btn btn-primary' type="submit">Salvar</button>
@@ -20,13 +20,5 @@ Blog - {{object.title}} Edit
             </div>  
         </div>
     </div>
-{% elif user.is_authenticated %}
-    <div class="alert alert-warning" role="alert">
-        Olá {{user.first_name}}, você não tem autorização para editar um artigo!!
-    </div>
-{% else %}
-    <div class="alert alert-info" role="alert">
-        Você precisa estar logado para editar um artigo!!
-    </div>
-{% endif %}
+
 {% endblock content %}
