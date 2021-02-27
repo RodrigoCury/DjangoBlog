@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+from django.contrib.messages import constants as messages
 from pathlib import Path
 from .utils import load_env
 import os
@@ -48,9 +49,24 @@ INSTALLED_APPS = [
     'accounts',
 ]
 
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
+
 CKEDITOR_CONFIGS = {
     'default': {
-        'toolbar': 'full',
+        'toolbar': [["Format", "Bold", "Italic", "Underline", "Strike", "SpellChecker"],
+                    ['NumberedList', 'BulletedList', "Indent", "Outdent", 'JustifyLeft', 'JustifyCenter',
+                     'JustifyRight', 'JustifyBlock'],
+                    ["Image", "Table", "Link", "Unlink", "Anchor",
+                        "SectionLink", "Subscript", "Superscript"],
+                    ['Undo', 'Redo'], ["Source"],
+                    ["Maximize"]],
+        'width': '100%'
     },
     'content_editor': {
         'toolbar': 'Basic',

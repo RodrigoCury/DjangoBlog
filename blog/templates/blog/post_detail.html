@@ -1,22 +1,48 @@
 {% extends 'base.html' %}
 
 {% block title %}
-
+{{object.title}}
 {% endblock %}
 
 {% block content %}
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
-</ul>
-{% endif %}
-<div class="post-entry">
-    <h2>{{object.title}}</h2>
-
-    <p>{{object.content|safe}}</p>
+<div class='container'>
+    {% include 'messages.html'%}
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <h2 class="text-center">{{object.title}}</h2>
+                    <a href='#' class='font-weight-bold'>
+                        <div class="container btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        {% for category in object.category.all %}
+                            <a href='{{ category.get_absolute_url }}'>
+                                <button type="button" class="btn btn-link">{{category.name}}</button>
+                            </a>
+                        {% endfor %}
+                        </div>
+                    </a>
+                    <p>{{object.content|safe}}</p>
+                </div>
+            </div>
+            <hr>    
+            <div class='row'>
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <p class='font-weight-bold'>Postado por {{object.author.first_name}}</p>                
+                </div>
+            </div>
+        </div>
+    </article>
+    
+    <hr>
+    {% if user.is_superuser %}
+    <div class="btn-group d-flex justify-content-around" role="group" aria-label="Basic example">
+        <a href="{{ object.get_absolute_url_update }}">
+            <button type="button" class="btn btn-primary">Editar</button>
+        </a>
+        <a href="{{ object.get_absolute_url_delete }}">
+            <button type="button" class="btn btn-danger">Deletar</button>
+        </a>
+    </div>
+    {% endif %}
 </div>
-<a href="{{ object.get_absolute_url_update }}">Editar</a>
-<a href="{{ object.get_absolute_url_delete }}">Delete</a>
 {% endblock content %}
