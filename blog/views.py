@@ -13,7 +13,7 @@ from .models import BlogPost, Category
 
 class CategoryListView(ListView):
     model = Category
-    paginate_by = 2
+    paginate_by = 6
     template_name = 'blog/categories_list.html'
 
 # {'paginator': < django.core.paginator.Paginator object at 0x7ff7f003a1f0 > ,
@@ -29,10 +29,9 @@ class CategoryDetailView(DetailView):
     template_name = 'blog/categories.html'
 
     def get_context_data(self, **kwargs):
-        paginate_by = 3
         context = super().get_context_data()
         posts_list = self.object.get_posts.all()
-        paginator = Paginator(posts_list, paginate_by)
+        paginator = Paginator(posts_list, 6)
         page = self.request.GET.get('page')
 
         try:
