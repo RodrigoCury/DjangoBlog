@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% load static %}
+{% block title %}
+Blog - Nova Postagem
+{% endblock %}
+
+{% block imgurl %}
+style="background-image: url({% static 'img/home-gb.jpg' %})"
+{% endblock imgurl %}
+
+{% block pagetitle %}
+<h1>Nova Postagem</h1>
+{% endblock %}
+
+
+
+{% block content %}
+<div class='container'>
+    <div class='card'>
+        <div class='card-header d-flex justify-content-center'>
+            <h2>Nova Postagem</h2>
+        </div>
+        <div class='card-body'>
+            <form method="post" enctype='multipart/form-data'>
+                {% csrf_token %}
+                {{ form|bootstrap }}
+                <button class='btn btn-primary' type="submit">Salvar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

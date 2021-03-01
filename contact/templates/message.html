@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{mensagem.title}}
+{% endblock %}
+
+{% block imgurl %}
+style="background-image: url({% load static %}
+{% static 'img/home-gb.jpg' %})"
+{% endblock imgurl %}
+
+{% block pagetitle %}
+<h1>Mensagem</h1>
+{% endblock %}
+
+
+
+{% block content %}
+<div class='container'>
+    {% include 'messages.html'%}
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <h1>{{mensagem.subject}}</h1>
+                    <p>{{mensagem.name}}</p>
+                    <p>{{mensagem.email}}</p>
+                    <div class="border border-dark col-lg-8 col-md-10 mx-auto">
+                        {{mensagem.message|safe}}
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </article>
+
+    <hr>
+    {% if user.is_superuser %}
+    <div class="btn-group d-flex justify-content-around" role="group" aria-label="Basic example">
+        <a href="{{ mensagem.get_absolute_url_delete }}">
+            <button type="button" class="btn btn-danger">Deletar</button>
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

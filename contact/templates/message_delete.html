@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% block title %}
+Blog - Delete {{object.title}}
+{% endblock %}
+
+{% block imgurl %}
+style="background-image: url({% if object.image %}
+{{object.image.url}}
+{% else %}
+{% load static %}
+{% static 'img/home-gb.jpg' %}
+{% endif %})"
+{% endblock imgurl %}
+
+{% block pagetitle %}
+<h1>Deletar Mensagem</h1>
+{% endblock %}
+
+
+
+{% block content %}
+<div class='container'>
+    <div class='card'>
+        <div class='card-header d-flex'>
+            <h1>Deletar Mensagem?</h1>
+        </div>
+        <div class='card-body'>
+            <form action="" method="post">
+                {% csrf_token %}
+                <h3>Você tem certeza que quer excluir a mensagem do(a) <i>{{object.name}}</i> ?</h3>
+                <button class='btn btn-primary position-relative' type="submit">Confirmar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

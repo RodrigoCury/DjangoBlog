@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Bioinformatizado
+{% endblock title %}
+
+{% block imgurl %}
+style="background-image: url({% static 'img/home-gb.jpg' %})"
+{% endblock imgurl %}
+
+{% block pagetitle %}
+<h1>Aprendendo Bioinformática</h1>
+<span class="subheading">Aprendizado vem aos poucos</span>
+{% endblock pagetitle %}
+{% block content %}
+
+<div class="d-flex flex-column col-lg-8 col-md-10 mx-auto"></div>
+
+{% include 'messages.html'%}
+
+{% for message in object_list %}
+<div class="post-preview">
+    <a href='{{message.get_absolute_url}}'>
+        <h2 class="post-title">{{message.name}}</h2>
+        <h3 class="post-subtitle">{{message.subject|truncatechars:"30"}}</h3>
+    </a>
+</div>
+<hr>
+{% endfor %}
+
+<div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group mr-2" role="group" aria-label="First group">
+        {% if page_obj.has_previous %}
+        <a href="?page=1"><button type="button" class="btn btn-primary">&laquo; Primeiro</button></a>
+        <a href="?page={{ page_obj.previous_page_number }}"><button type="button"
+                class="btn btn-primary">&#8636;</button></a>
+        {% else %}
+        <a class="disabled"><button type="button" disabed class="btn btn-primary">&laquo; Primeiro</button></a>
+        <a class="disabled"><button type="button" disabed class="btn btn-primary">&#8636;</button></a>
+        {% endif %}
+    </div>
+
+    <div class="btn-group mr-2" role="group" aria-label="Second group">
+        <a class="disabled">
+            <button type="button" class="btn btn-primary disabled">
+                Página {{ page_obj.number }}
+            </button>
+        </a>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Third group">
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}"><button type="button"
+                class="btn btn-primary">&#8640;</button></a>
+        <a href="?page={{ page_obj.paginator.num_pages }}"><button type="button" class="btn btn-primary">Último
+                &raquo;</button></a>
+        {% else %}
+        <a class="disabled"><button type="button" class="btn btn-primary">&#8640;</button></a>
+        <a class="disabled"><button type="button" class="btn btn-primary">Último &raquo;</button></a>
+        {% endif %}
+    </div>
+</div>
+
+</div>
+{% endblock content %}

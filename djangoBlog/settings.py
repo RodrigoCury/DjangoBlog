@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'blog',
     'accounts',
+    'contact',
 ]
 
 MESSAGE_TAGS = {
