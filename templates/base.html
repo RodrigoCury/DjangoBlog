@@ -13,6 +13,7 @@
 
     <!-- Custom fonts for this template -->
     <link href={% static 'vendor/fontawesome-free/css/all.min.css' %} rel="stylesheet" type="text/css">
+    <link href={% static 'vendor/fontawesome-free/css/fontawesome.css' %} rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
         type='text/css'>
     <link
@@ -45,18 +46,11 @@
                         <a class="nav-link" href={% url 'categories' %}>Categorias</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
+                        <a class="nav-link" href={% url 'about' %}>Quem sou?</a>
                     </li>
-
-                    {% if user.is_superuser %}
-                    <li class="nav-item">
-                        <a class='nav-link' href={% url 'post_new' %}>+Nova Postagem</a>
-                    </li>
-                    {% endif %}
-
                     {% if user.is_authenticated %}
                     <li class='nav-item'>
-                        <a href="#" class='nav-link'>Olá {{user.first_name}}!!</a>
+                        <a class='nav-link disabled'>Olá {{user.first_name}}!!</a>
                     </li>
                     <li class='nav-item'>
                         <a href={% url 'logout' %}>Logout</a>
@@ -134,6 +128,31 @@
                                 </span>
                             </a>
                         </li>
+                        <li class="list-inline-item">
+                            <a href={% url 'new_message' %}>
+                                <span class="fa-stack fa-lg">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        {% if user.is_superuser %}
+                        <li class="list-inline-item">
+                            <a href={% url 'message_list' %}>
+                                <span class="fa-stack fa-lg">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="far fa-envelope-open fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href={% url 'post_new' %}>
+                                <span class="fa-stack fa-lg">
+                                    <i class="fas fa-plus-circle fa-stack-2x"></i>
+                                </span>
+                            </a>
+                        </li>
+                        {% endif %}
                     </ul>
                     <p class="copyright text-muted">Copyright &copy; Bioinformatizado 2021</p>
                 </div>

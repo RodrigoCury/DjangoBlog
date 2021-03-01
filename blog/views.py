@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
 from django.urls import reverse_lazy
@@ -10,11 +9,6 @@ from django.views.generic.edit import CreateView
 from .forms import BlogPostForm
 from .models import BlogPost, Category
 # Create your views here.
-
-
-@login_required
-def hello(request):
-    return HttpResponse("Logado")
 
 
 class CategoryListView(ListView):

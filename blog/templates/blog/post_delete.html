@@ -6,11 +6,11 @@ Blog - Delete {{object.title}}
 
 {% block imgurl %}
 style="background-image: url({% if object.image %}
-                              {{object.image.url}}
-                              {% else %}
-                              {% load static %}
-                              {% static 'img/home-gb.jpg' %}
-                              {% endif %})"
+{{object.image.url}}
+{% else %}
+{% load static %}
+{% static 'img/home-gb.jpg' %}
+{% endif %})"
 {% endblock imgurl %}
 
 {% block pagetitle %}
@@ -20,18 +20,18 @@ style="background-image: url({% if object.image %}
 
 
 {% block content %}
-    <div class='container'>
-        <div class='card'>
-            <div class='card-header d-flex'>
-                <h1>Deletar postagem?</h1>
-            </div>
-            <div class='card-body'>
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <h3>Você tem certeza que quer excluir <i>{{object.title}}</i> ?</h3>
-                    <button class='btn btn-primary position-relative' type="submit">Confirmar</button>
-                </form>
-            </div>
+<div class='container'>
+    <div class='card'>
+        <div class='card-header d-flex'>
+            <h1>Deletar postagem?</h1>
+        </div>
+        <div class='card-body'>
+            <form action="" method="post">
+                {% csrf_token %}
+                <h3>Você tem certeza que quer excluir <i>{{object.title}}</i> ?</h3>
+                <button class='btn btn-primary position-relative' type="submit">Confirmar</button>
+            </form>
         </div>
     </div>
+</div>
 {% endblock content %}

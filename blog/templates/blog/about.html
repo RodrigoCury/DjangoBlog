@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Bioinformatizado
+{% endblock title %}
+
+{% block imgurl %}
+style="background-image: url({% static 'img/about.png' %})"
+{% endblock imgurl %}
+
+{% block pagetitle %}
+<h1>Bioinformatizado</h1>
+<span class="subheading">Quem sou?</span>
+{% endblock pagetitle %}
+
+{% block content %}
+
+<div class="d-flex flex-column col-lg-8 col-md-10 mx-auto"></div>
+<article>
+    <p><strong>Quem sou eu?</strong></p>
+
+    <p>Ol&aacute;, Meu nome &eacute; Rodrigo Cury! Sou um estudante de Biotecnologia na Universidade Federal de
+        Uberl&acirc;ndia.</p>
+
+    <p>Durante meu tempo na universidade aprendi a programar em Python e me deslumbrei com as possibilidades dessa
+        ferramenta. Hoje tenho como meta me aperfei&ccedil;oar como programador, mas pricipalmente como bioinformata. A
+        quantidade de ferramentas e de dados biol&oacute;gicos cresceram exponencialmente nas ultimas decadas, e
+        pretendo entender e desenvolver ferramentas e tecnologias que possam ajudar cientistas e pessoas ao redor do
+        mundo,</p>
+
+    <p><strong>Beleza Rodrigo, mas e esse Blog?</strong></p>
+
+    <p>Eu criei esse blog como parte do meu aprendizado em desenvolvimento web, e estarei usando-o como um log de
+        ferramentas e tecnologias que
+        aprendi e assim tamb&eacute;m poderei compartilhar esse conhecimento com outras pessoas interessadas. Mas
+        lembre-se, sou apenas um bacharelando. me esfor&ccedil;arei ao m&aacute;ximo para trazer conte&uacute;dos
+        corretos aqui, por&eacute;m posso estar equivocado, pois ainda estou aprendendo!</p>
+
+    <p>Obrigado por visitar minha p&aacute;gina! Fique a vontade para me contatar caso queira corrigir algo que eu
+        disse, ou caso queira tirar alguma d&uacute;vida pelas minhas redes sociais no rodap&eacute;.</p>
+
+</article>
+</div>
+{% endblock content %}
