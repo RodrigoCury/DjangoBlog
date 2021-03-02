@@ -1,0 +1,8 @@
+.box-shadow-hover:hover{
+  box-shadow: 2px 2px 2px darkgrey;
+}
+
+.box-shadow-hover:active {
+  transition: 200ms;
+  box-shadow: 2px 2px 2px #0085A1;
+}
